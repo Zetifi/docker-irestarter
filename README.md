@@ -6,7 +6,7 @@ Restart a docker container when a file is modified.
 
 This project combines `inotifywait` from `inotify-tools` with Docker to watch for a modification to a file and restart containers with a specific label.
 
-This image could be used in a docker-compose file to restart a container upon an update to a certificate file, when the service is unable to handle this itself.
+For example, this image could be used in a docker-compose file to restart a container upon an update to an SSL certificate file, where the service is unable to handle this itself.
 
 ## Example compose file
 Set the file to monitor for changes as an environment variable.
