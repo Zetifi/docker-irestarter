@@ -17,7 +17,7 @@ MONITOR_FILE=/etc/letsencrypt/example-domain/fullchain.pem
 
 This snippet can be inserted into an existing compose file with minimal changes.
 See `docker-compose.yml` for a fully functional example.
-```yaml
+```yml
 version: "3"
 services:
   docker-irestarter:
@@ -38,8 +38,43 @@ services:
 ```
 <!--
 ### Publishing
+
 Notes for building and publishing
 ```bash
 docker build -t Zetifi/docker-irestarter:latest .
+```
+
+### Full working example
+
+Dockerfile.example-https-service
+```yml
+FROM alpine:latest
+
+RUN touch example.log
+
+CMD ["tail", "-f", "example.log"]
+```
+
+docker-compose.yml
+```yml
+version: "3"
+services:
+  docker-irestarter:
+    build:
+      context: .
+    restart: always
+    volumes:
+      - ${MONITOR_FILE}:${MONITOR_FILE}
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - MONITOR_FILE=${MONITOR_FILE}
+      - SERVICE_TO_RESTART=example-https-service
+
+  example-https-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.example-https-service
+    volumes:
+      - ${MONITOR_FILE}:${MONITOR_FILE}
 ```
 -->
