@@ -28,13 +28,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - MONITOR_FILE=${MONITOR_FILE}
-      # Update service name to be restarted
-      - SERVICE_TO_RESTART=example_https_service
 
-  # Ensure service name is explicit
-  # We don't want to restart the wrong one
-  example_https_service:
+  example-https-service:
     ...
+    labels:
+      - "docker-irestarter"
 ```
 <!--
 ### Publishing
@@ -68,13 +66,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - MONITOR_FILE=${MONITOR_FILE}
-      - SERVICE_TO_RESTART=example-https-service
 
   example-https-service:
     build:
       context: .
       dockerfile: Dockerfile.example-https-service
-    volumes:
-      - ${MONITOR_FILE}:${MONITOR_FILE}
+    labels:
+      - "docker-irestarter"
 ```
 -->
