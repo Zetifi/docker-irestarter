@@ -37,7 +37,7 @@ services:
 
 Notes for building and publishing
 ```bash
-docker build -t Zetifi/docker-irestarter:latest .
+docker build . -t zetifi/docker-irestarter:latest
 ```
 
 ### Full working example
