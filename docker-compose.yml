@@ -1,0 +1,22 @@
+version: "3"
+services:
+  certificate_refresher:
+    build:
+      context: .
+    restart: always
+    volumes:
+      - ${SSL_CERTFILE}:${SSL_CERTFILE}
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - SSL_CERTFILE=${SSL_CERTFILE}
+      # Name of the service needing restart following certificate refresh
+      - SERVICE_TO_RESTART=example_https_service
+
+  # Ensure service name is explicit
+  # We don't want to restart the wrong one
+  example_https_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.example_https_service
+    volumes:
+      - ${SSL_CERTFILE}:${SSL_CERTFILE}
