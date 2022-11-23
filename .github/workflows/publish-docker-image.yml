@@ -1,9 +1,9 @@
 name: Publish Docker Image
 
 on:
-  release:
-    types:
-      - created
+  push:
+    branches:
+      - master
 
 jobs:
   docker-hub-push:
@@ -18,7 +18,6 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: zetifi/docker-irestarter
-          tags: type=semver,pattern={{version}}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -35,5 +34,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ steps.meta.outputs.tags }}, zetifi/docker-irestarter:latest
+          tags: zetifi/docker-irestarter:latest
           platforms: linux/arm64/v8,linux/amd64
