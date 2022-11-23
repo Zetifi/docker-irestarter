@@ -37,7 +37,7 @@ services:
 
 Notes for building and publishing
 ```bash
-docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --tag zetifi/docker-irestarter:latest .
+docker buildx build --push --platform linux/arm64/v8,linux/amd64 --tag zetifi/docker-irestarter:latest .
 ```
 
 ### Full working example
