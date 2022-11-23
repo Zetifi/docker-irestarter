@@ -36,3 +36,4 @@ jobs:
         with:
           push: true
           tags: ${{ steps.meta.outputs.tags }}, zetifi/docker-irestarter:latest
+          platforms: linux/arm64/v8,linux/amd64
