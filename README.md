@@ -19,7 +19,7 @@ This snippet can be inserted into an existing compose file with minimal changes.
 version: "3"
 services:
   docker-irestarter:
-    image: Zetifi/docker-irestarter:latest
+    image: zetifi/docker-irestarter:latest
     restart: always
     volumes:
       - ${MONITOR_FILE}:${MONITOR_FILE}
