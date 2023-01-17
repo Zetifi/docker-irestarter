@@ -10,6 +10,8 @@ For example, this image could be used in a docker-compose file to restart a cont
 
 ## Example compose file
 Set the file to monitor for changes as an environment variable.
+
+*(Alternatively, you can individually replace ${MONITOR_FILE} with suitable values.)*
 ```
 MONITOR_FILE=/file/to/monitor.txt
 ```
@@ -37,7 +39,11 @@ services:
 
 Notes for building and publishing
 ```bash
+# For publish:
 docker buildx build --push --platform linux/arm64/v8,linux/amd64 --tag zetifi/docker-irestarter:latest .
+
+# For dev:
+docker build --tag zetifi/docker-irestarter:latest .                                                    
 ```
 
 ### Full working example
