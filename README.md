@@ -9,9 +9,17 @@ This project combines `inotifywait` from `inotify-tools` with Docker to watch fo
 For example, this image could be used in a docker-compose file to restart a container upon an update to an SSL certificate file, where the service is unable to handle this itself. In this case, you would configure the environment variable to monitor the certificate file.
 
 ## Example compose file
+This example has been created based upon the docker compose CLI v2.
+
 Set the file to monitor for changes as an environment variable.
 
-*(Alternatively, you can individually replace ${MONITOR_FILE} with suitable values.)*
+This can also be set in a `.env` file in the same directory as the compose file.
+
+***Note**: Environment variables set with `export` or another method take precedence over `.env`. Ensure to `unset MONITOR_FILE` if issues with `.env` are experienced.*
+
+You should always ensure the irestarter container is running following a `docker-compose up`.
+
+Alternatively, you can individually replace ${MONITOR_FILE} in the compose file with suitable values.
 ```
 MONITOR_FILE=/file/to/monitor.txt
 ```
@@ -22,7 +30,7 @@ version: "3"
 services:
   docker-irestarter:
     image: zetifi/docker-irestarter:latest
-    restart: always
+    restart: "no"
     volumes:
       - ${MONITOR_FILE}:${MONITOR_FILE}
       - /var/run/docker.sock:/var/run/docker.sock
@@ -44,7 +52,7 @@ version: "3"
 services:
   docker-irestarter:
     image: zetifi/docker-irestarter:latest
-    restart: always
+    restart: "no"
     volumes:
       - ${MONITOR_FILE}:${MONITOR_FILE}
       - /var/run/docker.sock:/var/run/docker.sock
