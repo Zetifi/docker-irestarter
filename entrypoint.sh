@@ -9,7 +9,7 @@ fi
 function process_restart() {
     if [[ $SIGHUP ]]; then
         container=$(docker ps --latest --quiet --filter "label=docker-irestarter-SIGHUP")
-        docker exec $container killall -SIGHUP $SIGHUP
+        docker kill --signal=SIGHUP $container
         echo "SIGHUP sent to $container for proccess $SIGHUP"
     else
         container=$(docker ps --latest --quiet --filter "label=docker-irestarter")
