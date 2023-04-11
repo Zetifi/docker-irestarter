@@ -18,4 +18,4 @@ function process_restart() {
     fi
 }
 
-inotifywait --monitor --event close_write $MONITOR_FILE | while read; do process_restart; done
+inotifywait --monitor --recursive --event close_write $MONITOR_FILE | while read; do process_restart; done
