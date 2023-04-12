@@ -1,21 +1,26 @@
 #!/bin/bash
-set -e
+set -euo pipefail
+
+CONTAINER_LABEL=docker-irestarter
 
 if [[ -z $MONITOR_FILE ]]; then
     echo "MONITOR_FILE can not be an empty string."
     exit 1
 fi
 
-container=$(docker ps --latest --quiet --filter "label=docker-irestarter")
-if [[ -z $container ]]; then
-    echo "No docker container with 'docker-irestarter' label could be found"
+CONTAINER=$(docker ps --latest --quiet --filter "label=$CONTAINER_LABEL")
+if [[ -z $CONTAINER ]]; then
+    echo "No docker container with '$CONTAINER_LABEL' label could be found"
     exit 1
 fi 
 
 function process_restart() {
+    if [[ -n $SIGNAL ]]; then
+        docker kill --signal=$SIGNAL $CONTAINER
+        echo "docker kill signal $SIGNAL sent to $CONTAINER"
     else
-        docker restart $container
-        echo "docker restart sent to $container"
+        docker restart $CONTAINER
+        echo "docker restart sent to $CONTAINER"
     fi
 }
 
