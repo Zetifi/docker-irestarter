@@ -1,0 +1,18 @@
+version: "3"
+services:
+  docker-irestarter:
+    image: zetifi/docker-irestarter:latest
+    restart: always
+    volumes:
+      - ./irestarter-test/live:/etc/letsencrypt:ro # Local file or directory to monitor for changes
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - MONITOR_FILE=/etc/letsencrypt
+      - SIGNAL=SIGHUP # Optional signal to pass to main container process, rather than restarting the container
+
+  example-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.example-service
+    labels:
+      - "docker-irestarter" # Required label for irestarter to target this container

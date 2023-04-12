@@ -1,0 +1,5 @@
+FROM alpine:latest
+
+RUN touch example.log
+
+CMD ["tail", "-f", "example.log"]
