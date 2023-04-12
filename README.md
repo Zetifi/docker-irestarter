@@ -30,7 +30,7 @@ version: "3"
 services:
   docker-irestarter:
     image: zetifi/docker-irestarter:latest
-    restart: "no"
+    restart: always
     volumes:
       - ${MONITOR_FILE}:${MONITOR_FILE}
       - /var/run/docker.sock:/var/run/docker.sock
@@ -43,27 +43,28 @@ services:
       - "docker-irestarter"
 ```
 
-### Alternate example
-Instead of restarting the container, it's possible to send a SIGHUP signal to a proccess within the container.
+### Send a Linux Signal instead of container restart
+Instead of restarting the container, it's possible to send a signal to a container.
+Refer to the [signal(7)](https://man7.org/linux/man-pages/man7/signal.7.html) man-page for a list of standard Linux signals.
 
-Note the different label applied to the target container and the additional environment variable added to the `docker-irestarter` container.
+Note the `SIGHUP` signal passsed as an environment variable to the `docker-irestarter` container.
 ```yml
 version: "3"
 services:
   docker-irestarter:
     image: zetifi/docker-irestarter:latest
-    restart: "no"
+    restart: always
     volumes:
       - ${MONITOR_FILE}:${MONITOR_FILE}
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - MONITOR_FILE=${MONITOR_FILE}
-      - SIGHUP=${SIGHUP_PROCESS}
+      - SIGNAL=SIGHUP
 
   example-service:
     ...
     labels:
-      - "docker-irestarter-SIGHUP"
+      - "docker-irestarter"
 ```
 <!--
 ### Publishing

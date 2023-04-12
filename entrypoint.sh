@@ -7,12 +7,13 @@ if [[ -z $MONITOR_FILE ]]; then
 fi
 
 function process_restart() {
-    if [[ $SIGHUP ]]; then
-        container=$(docker ps --latest --quiet --filter "label=docker-irestarter-SIGHUP")
-        docker kill --signal=SIGHUP $container
-        echo "SIGHUP sent to $container for proccess $SIGHUP"
+
+    container=$(docker ps --latest --quiet --filter "label=docker-irestarter")
+
+    if [[ $SIGNAL ]]; then
+        docker kill --signal=$SIGNAL $container
+        echo "docker kill signal $SIGNAL sent to $container"
     else
-        container=$(docker ps --latest --quiet --filter "label=docker-irestarter")
         docker restart $container
         echo "docker restart sent to $container"
     fi
