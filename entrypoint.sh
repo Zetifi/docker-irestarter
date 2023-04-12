@@ -6,13 +6,13 @@ if [[ -z $MONITOR_FILE ]]; then
     exit 1
 fi
 
+container=$(docker ps --latest --quiet --filter "label=docker-irestarter")
+if [[ -z $container ]]; then
+    echo "No docker container with 'docker-irestarter' label could be found"
+    exit 1
+fi 
+
 function process_restart() {
-
-    container=$(docker ps --latest --quiet --filter "label=docker-irestarter")
-
-    if [[ $SIGNAL ]]; then
-        docker kill --signal=$SIGNAL $container
-        echo "docker kill signal $SIGNAL sent to $container"
     else
         docker restart $container
         echo "docker restart sent to $container"
