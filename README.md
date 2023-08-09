@@ -31,7 +31,7 @@ This snippet can be inserted into an existing compose file with minimal changes.
 version: "3"
 services:
   docker-irestarter:
-    image: zetifi/docker-irestarter:latest
+    image: ghcr.io/zetifi/docker-irestarter:1
     restart: always
     volumes:
       - ${MONITOR_FILE}:${MONITOR_FILE}
@@ -54,7 +54,7 @@ Note the `SIGHUP` signal passsed as an environment variable to the `docker-irest
 version: "3"
 services:
   docker-irestarter:
-    image: zetifi/docker-irestarter:latest
+    image: ghcr.io/zetifi/docker-irestarter:1
     restart: always
     volumes:
       - ${MONITOR_FILE}:${MONITOR_FILE}

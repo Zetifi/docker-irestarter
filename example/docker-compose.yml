@@ -1,7 +1,7 @@
 version: "3"
 services:
   docker-irestarter:
-    image: zetifi/docker-irestarter:latest
+    image: ghcr.io/zetifi/docker-irestarter:1
     restart: always
     volumes:
       - ./irestarter-test/live:/etc/letsencrypt:ro # Local file or directory to monitor for changes
