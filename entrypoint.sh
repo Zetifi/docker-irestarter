@@ -1,8 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-CONTAINER_LABEL=docker-irestarter
-
 if [[ -z $MONITOR_FILE ]]; then
     echo "MONITOR_FILE can not be an empty string."
     exit 1
